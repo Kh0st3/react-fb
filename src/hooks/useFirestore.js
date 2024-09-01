@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { db, auth } from "../firebase"
-import { collection, deleteDoc, doc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
 export const useFirestore = () => {
@@ -16,8 +16,7 @@ export const useFirestore = () => {
             const dataRef = collection(db, "urls")
             const q = query(
                 dataRef, 
-                where("uid", "==", auth.currentUser.uid)
-            );
+                where("uid", "==", auth.currentUser.uid));
             const querySnapshot = await getDocs(q);
             const dataDB = querySnapshot.docs.map(doc => doc.data());
             setData(dataDB);
@@ -81,6 +80,19 @@ export const useFirestore = () => {
         } finally {
             setLoading(prev => ({...prev, updateData: false}));
         }
+    };
+
+    const searchData = async(nanoid) => {
+        try{
+            const docRef = doc(db, "urls", nanoid);
+            const docSnap = await getDoc(docRef);
+
+            return docSnap;
+
+        } catch(error) {
+            console.log(error);
+            setError(error.message);
+        }
     }
 
     return {
@@ -92,6 +104,7 @@ export const useFirestore = () => {
         addData,
         deleteData,
         updateData,
+        searchData,
     }
 
 }

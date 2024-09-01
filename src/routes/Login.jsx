@@ -9,7 +9,6 @@ import FormError from "../components/FormError";
 import FormInput from "../components/FormInput";
 import Title from "../components/Title";
 import Button from "../components/Button";
-//import ButtonLoading from "../components/ButtonLoading";
 
 const Login = () => {
 
@@ -31,11 +30,11 @@ const Login = () => {
             await loginUser(email, password);
             navigate("/");
         } catch (error) {
-            const {code, message} = errorsFirebase(error);
+            const {code, message} = errorsFirebase(error.code);
             setError(code, { message });
         } finally { 
             setLoading(false);
-        }  // finally block will execute regardless of whether an error occurred or not.  //  finally block is used for cleanup.  //  Here we're setting loading to false when we're done with the request.  //  It's a good practice to always include a finally block in your async functions to ensure cleanup.  //  It's also a good practice to wrap the API call in a try-catch block and call the finally block in the catch block.  //  This way, you're guaranteed that the finally block will be executed, regardless of whether an error occurred or not.  //  This prevents potential memory leaks.  //  Finally block is used for cleanup.  //  Here we're setting loading to false when we're done with the request.  //  It's a good practice to always include a finally block in your async functions to ensure cleanup.  //  It's also a good practice to wrap the
+        }  
     };
 
     return (
