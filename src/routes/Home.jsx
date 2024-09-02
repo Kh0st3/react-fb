@@ -71,7 +71,7 @@ const Home = () => {
 
     return (
         <>
-            <Title text="Home"/>
+            <Title text="Home Administrator URLs"/>
             
             <form onSubmit={handleSubmit(onSubmit)}>
 
